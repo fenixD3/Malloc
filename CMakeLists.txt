@@ -5,4 +5,7 @@ include_directories(includes)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Malloc main.c)
+add_executable(Malloc
+    sources/main.c
+    includes/malloc.h
+    sources/malloc.c includes/malloc_struct.h)
