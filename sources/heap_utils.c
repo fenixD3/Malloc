@@ -7,7 +7,7 @@ t_heap* find_available_heap(t_heap* heap_head, t_heap** prev_target_heap,
 	t_heap *current_heap;
 
 	current_heap = heap_head;
-	*prev_target_heap = current_heap->prev;
+	*prev_target_heap = NULL;
 	while (current_heap)
 	{
 		/// TODO add defragmentation
@@ -34,7 +34,10 @@ t_heap* create_heap(t_heap** heap_head, t_heap* prev_target_heap,
 	if (res == MAP_FAILED)
 		return (NULL);
 	if (!prev_target_heap)
+	{
 		*heap_head = res; /// TODO проверить на правильность!
+		g_allocated_heap = *heap_head;
+	}
 	res->type = alloc_info->alloc_type;
 	res->total_size = heap_alloc_size;
 	res->avail_size = heap_alloc_size - sizeof(t_heap);

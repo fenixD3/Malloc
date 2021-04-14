@@ -4,7 +4,8 @@
 
 int main()
 {
-	get_system_memory_limit();
-	printf("Heap struct alloc_size = %ld\n", sizeof(g_allocated_heap));
+	void *res = malloc(128);
+	show_alloc_mem();
+//	printf("Heap struct alloc_size = %ld\n", sizeof(g_allocated_heap));
     return 0;
 }

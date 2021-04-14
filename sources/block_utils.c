@@ -1,12 +1,14 @@
 #include "block_utils.h"
 
-t_block* find_avail_block(t_heap* target_heap, t_block** prev_avail_block,
-						  const t_alloc_info* alloc_info)
+void	*find_avail_block(t_heap* target_heap, t_block** prev_avail_block,
+						const t_alloc_info* alloc_info)
 {
 	t_block	*blocks_meta;
 
-	blocks_meta = HEAP_TO_BLOCK(target_heap);
+	blocks_meta = (t_block *)HEAP_TO_BLOCK(target_heap);
 	*prev_avail_block = blocks_meta->prev;
+	if (!target_heap->block_count)
+		return (NULL);
 	while (blocks_meta)
 	{
 		if (blocks_meta->is_freed
@@ -18,7 +20,7 @@ t_block* find_avail_block(t_heap* target_heap, t_block** prev_avail_block,
 	return (NULL);
 }
 
-t_block *append_new_block(
+void	*append_new_block(
 	t_heap *target_heap,
 	t_block* last_block,
 	const t_alloc_info* alloc_info)
@@ -37,5 +39,5 @@ t_block *append_new_block(
 	new_block->next = NULL;
 	++target_heap->block_count;
 	target_heap->avail_size -= alloc_info->block_size + sizeof(t_block);
-	return ((t_block *)BLOCK_TO_DATA(new_block));
+	return (BLOCK_TO_DATA(new_block));
 }

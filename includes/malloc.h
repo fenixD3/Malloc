@@ -7,6 +7,7 @@
 # include <pthread.h>
 
 # include "malloc_struct.h"
+# include "libft.h"
 
 void			free(void *ptr);
 void			*malloc(size_t size);
