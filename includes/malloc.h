@@ -1,7 +1,6 @@
 #ifndef MALLOC_MALLOC
 # define MALLOC_MALLOC
 
-# include <unistd.h>
 # include <sys/mman.h>
 # include <sys/time.h>
 # include <sys/resource.h>

@@ -1,6 +1,7 @@
 #ifndef MALLOC_MALLOC_STRUCT
 # define MALLOC_MALLOC_STRUCT
 
+# include <unistd.h>
 # include <string.h>
 
 # define TINY_PAGE_SIZE (4 * getpagesize())
@@ -28,6 +29,7 @@ typedef struct	s_heap
 {
 	t_page_types	type;
 	size_t			total_size;
+	size_t			avail_size;
 	size_t			block_count;
 	struct s_heap	*prev;
 	struct s_heap	*next;
@@ -40,5 +42,12 @@ typedef struct	s_block
 	struct s_block	*prev;
 	struct s_block	*next;
 }				t_block;
+
+typedef struct	s_alloc_info
+{
+	size_t			alloc_size;
+	size_t			block_size;
+	t_page_types	alloc_type;
+}				t_alloc_info;
 
 #endif

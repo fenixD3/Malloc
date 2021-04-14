@@ -1,17 +1,41 @@
 #include "block_utils.h"
 
-t_block		*find_available_block(t_heap *heap, t_alloc_info *block_info)
+t_block* find_avail_block(t_heap* target_heap, t_block** prev_avail_block,
+						  const t_alloc_info* alloc_info)
 {
 	t_block	*blocks_meta;
 
-	while (heap)
+	blocks_meta = HEAP_TO_BLOCK(target_heap);
+	*prev_avail_block = blocks_meta->prev;
+	while (blocks_meta)
 	{
-		blocks_meta = HEAP_TO_BLOCK(heap);
-		while (heap->type == block_info->alloc_type && blocks_meta)
-		{
-
-		}
-		heap = heap->next;
+		if (blocks_meta->is_freed
+			&& blocks_meta->data_size >= alloc_info->alloc_size + sizeof(t_block))
+			return (BLOCK_TO_DATA(blocks_meta));
+		*prev_avail_block = blocks_meta;
+		blocks_meta = blocks_meta->next;
 	}
 	return (NULL);
+}
+
+t_block *append_new_block(
+	t_heap *target_heap,
+	t_block* last_block,
+	const t_alloc_info* alloc_info)
+{
+	t_block *new_block;
+
+	if (!last_block)
+		new_block = (t_block *)HEAP_TO_BLOCK(target_heap);
+	else
+		new_block = (t_block *)(BLOCK_TO_DATA(last_block) + last_block->data_size);
+	new_block->is_freed = FALSE;
+	new_block->data_size = alloc_info->block_size;
+	new_block->prev = last_block;
+	if (last_block)
+		last_block->next = new_block;
+	new_block->next = NULL;
+	++target_heap->block_count;
+	target_heap->avail_size -= alloc_info->block_size + sizeof(t_block);
+	return ((t_block *)BLOCK_TO_DATA(new_block));
 }

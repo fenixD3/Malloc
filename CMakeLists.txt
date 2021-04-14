@@ -10,8 +10,8 @@ add_executable(Malloc
     includes/malloc.h
     sources/malloc.c
     includes/malloc_struct.h
-    includes/block_info.h
-    sources/block_info.c
+        includes/malloc_utils.h
+        sources/malloc_utils.c
     sources/block_utils.c
     includes/block_utils.h
-    sources/extern_definition.c)
+    sources/extern_definition.c includes/heap_utils.h sources/heap_utils.c)
