@@ -8,6 +8,7 @@
 
 # include "malloc_struct.h"
 # include "libft.h"
+# include "logger.h"
 
 void			free(void *ptr);
 void			*malloc(size_t size);

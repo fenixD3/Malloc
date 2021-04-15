@@ -25,11 +25,9 @@ static void	*get_allocated_block(
 static void	*process_malloc(size_t size)
 {
 	t_alloc_info	alloc_info;
-//	t_heap			*heap;
 
 	if (!size)
 		return (NULL);
-//	heap = g_allocated_heap;
 	alloc_info = get_alloc_info((size + 15) & ~15);
 	return (get_allocated_block(g_allocated_heap, &alloc_info));
 }
@@ -39,5 +37,6 @@ void		*malloc(size_t size)
 	void *allocated_memory;
 
 	allocated_memory = process_malloc(size);
+	logger_init(MALLOC);
 	return (allocated_memory);
 }

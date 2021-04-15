@@ -19,4 +19,6 @@ add_executable(Malloc
     sources/libft/ft_putstr.c
     sources/libft/ft_strlen.c
     sources/libft/ft_putchar.c
-    sources/libft/ft_putchar_fd.c)
+    sources/libft/ft_putchar_fd.c
+    sources/libft/ft_putstr_fd.c
+    includes/logger.h sources/logger/logger.c sources/logger/logger_utils.c)
