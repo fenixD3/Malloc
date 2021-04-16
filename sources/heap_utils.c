@@ -1,6 +1,22 @@
 #include "heap_utils.h"
 #include "malloc_utils.h"
 
+static void	init_heap(
+	t_heap *heap,
+	size_t size,
+	t_page_types type,
+	t_heap *prev_target_heap)
+{
+	heap->type = type;
+	heap->total_size = size;
+	heap->avail_size = size - sizeof(t_heap);
+	heap->block_count = 0;
+	heap->prev = prev_target_heap;
+	if (prev_target_heap)
+		prev_target_heap->next = heap;
+	heap->next = NULL;
+}
+
 t_heap* find_available_heap(t_heap* heap_head, t_heap** prev_target_heap,
 							const t_alloc_info* alloc_info)
 {
@@ -38,13 +54,6 @@ t_heap* create_heap(t_heap** heap_head, t_heap* prev_target_heap,
 		*heap_head = res; /// TODO проверить на правильность!
 		g_allocated_heap = *heap_head;
 	}
-	res->type = alloc_info->alloc_type;
-	res->total_size = heap_alloc_size;
-	res->avail_size = heap_alloc_size - sizeof(t_heap);
-	res->block_count = 0;
-	res->prev = prev_target_heap;
-	if (prev_target_heap)
-		prev_target_heap->next = res;
-	res->next = NULL;
+	init_heap(res, heap_alloc_size, alloc_info->alloc_type, prev_target_heap);
 	return (res);
 }

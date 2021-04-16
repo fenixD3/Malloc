@@ -5,7 +5,8 @@
 
 typedef enum	e_environment
 {
-	LOG_FILE = 1
+	ENV_LOG_FILE = 1,
+	ENV_SCRIBBLE
 }				t_environment;
 
 typedef enum	e_start_event
@@ -15,8 +16,9 @@ typedef enum	e_start_event
 	REALLOC
 }				t_start_event;
 
-# define LOG_PATH "/tmp/Malloc/malloc_log"
-# define MALLOC_LOGGER "Malloc_Logger"
+# define LOG_PATH "./malloc_log"
+# define MALLOC_LOGGER_ENV "MallocLogger"
+# define MALLOC_SCRIBBLE_ENV "MallocScribble"
 
 void	logger_init(t_start_event start_event);
 void	write_to_log(const char *str);
