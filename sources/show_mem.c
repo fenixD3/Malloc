@@ -70,7 +70,7 @@ void	print_block_mem(unsigned char *start_addr, unsigned char *end_addr)
 {
 	size_t i;
 
-	ft_putstr("\\e[93mStart print block memory\\e[39m\n");
+	ft_putstr("\e[93mStart print block memory\e[39m\n");
 	while (start_addr <= end_addr)
 	{
 		ft_itoa_base((size_t)start_addr, 16, TRUE);
@@ -84,7 +84,7 @@ void	print_block_mem(unsigned char *start_addr, unsigned char *end_addr)
 				ft_putchar(' ');
 		}
 		ft_putchar('\n');
-		start_addr += i;
+		start_addr += i - 1;
 	}
-	ft_putstr("\\e[93mEnd print block memory\\e[39m\n");
+	ft_putstr("\e[93mEnd print block memory\e[39m\n");
 }
