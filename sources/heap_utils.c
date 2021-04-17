@@ -26,7 +26,6 @@ t_heap* find_available_heap(t_heap* heap_head, t_heap** prev_target_heap,
 	*prev_target_heap = NULL;
 	while (current_heap)
 	{
-		/// TODO add defragmentation
 		if (current_heap->type == alloc_info->alloc_type
 			&& current_heap->avail_size >= alloc_info->alloc_size)
 			return (current_heap);
