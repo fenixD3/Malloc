@@ -15,6 +15,8 @@ int main()
 	res[5] = (uint8_t)5;
 	res[6] = (uint8_t)5;
 	show_mem_with_blocks();
+	free(res);
+	show_mem_with_blocks();
 //	printf("Heap struct alloc_size = %ld\n", sizeof(g_allocated_heap));
     return 0;
 }

@@ -3,7 +3,7 @@
 #include "block_utils.h"
 #include "heap_utils.h"
 
-static void	*get_allocated_block(
+void	*get_allocated_block(
 	t_heap *heap_head,
 	const t_alloc_info* alloc_info)
 {
@@ -18,15 +18,11 @@ static void	*get_allocated_block(
 		target_heap = create_heap(&heap_head, prev_target_heap, alloc_info);
 	alloc_block = find_avail_block(target_heap, &prev_avail_block, alloc_info);
 	if (!alloc_block)
-	{
-		if (target_heap->avail_size >= alloc_info->alloc_size)
-			; /// TODO add defragmentation
 		alloc_block = append_new_block(target_heap, prev_avail_block, alloc_info);
-	}
 	return ((void *)alloc_block);
 }
 
-static void	*process_malloc(size_t size)
+void	*process_malloc(size_t size)
 {
 	t_alloc_info	alloc_info;
 
@@ -40,7 +36,7 @@ void		*malloc(size_t size)
 {
 	void *allocated_memory;
 
-	allocated_memory = process_malloc(size);
 	logger_init(MALLOC);
+	allocated_memory = process_malloc(size);
 	return (allocated_memory);
 }

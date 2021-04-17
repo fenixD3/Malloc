@@ -13,7 +13,8 @@ typedef enum	e_start_event
 {
 	MALLOC,
 	FREE,
-	REALLOC
+	REALLOC,
+	CALLOC
 }				t_start_event;
 
 # define LOG_PATH "./malloc_log"

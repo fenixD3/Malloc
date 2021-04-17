@@ -24,4 +24,5 @@ add_executable(Malloc
     sources/libft/ft_bzero.c
     sources/libft/ft_strncpy.c
     sources/libft/ft_memset.c
-    includes/logger.h sources/logger/logger.c sources/logger/logger_utils.c)
+    sources/libft/ft_memcpy.c
+    includes/logger.h sources/logger/logger.c sources/logger/logger_utils.c sources/free.c sources/free_utils.c includes/free_utils.h sources/realloc.c includes/realloc_utils.h sources/realloc_utils.c sources/calloc.c)
