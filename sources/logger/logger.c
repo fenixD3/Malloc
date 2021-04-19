@@ -37,8 +37,8 @@ void	write_to_log(const char* str, t_event event, void* dynamic_data, size_t sta
 			ft_itoa_base(static_data, 10, FALSE, fd);
 		else if (event == HEAP || event == DEALLOCATE_HEAP)
 			log_heap_data((t_heap*)dynamic_data, fd, event);
-		else if (event == BLOCK)
-			log_block_data((t_block*)dynamic_data, fd);
+		else if (event == BLOCK || event == BLOCK_DATA)
+			log_block_data((t_block *) dynamic_data, fd, event);
 		else if (event == PTR)
 			log_pointer(dynamic_data, fd);
 		ft_putchar_fd('\n', fd);

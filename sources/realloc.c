@@ -48,7 +48,7 @@ void	*process_realloc(void *ptr, size_t size)
 	}
 	search_target_block(&target_heap, &target_block, g_allocated_heap, ptr);
 	write_to_log("Found heap: ", HEAP, target_heap, 0);
-	write_to_log("Found block: ", BLOCK, target_block, 0);
+	write_to_log("Found meta block: ", BLOCK, target_block, 0);
 	if (!target_block || target_block->is_freed)
 		return (NULL);
 	return (realloc_block(target_heap, target_block, size));
@@ -56,8 +56,13 @@ void	*process_realloc(void *ptr, size_t size)
 
 void	*realloc(void *ptr, size_t size)
 {
+	void *block_realloc;
+
+	pthread_mutex_lock(&g_mutex);
 	logger_init(REALLOC);
 	write_to_log("Realloc ptr = ", PTR, ptr, 0);
 	write_to_log("New size = ", STATIC, NULL, size);
-	return (process_realloc(ptr, size));
+	block_realloc = process_realloc(ptr, size);
+	pthread_mutex_unlock(&g_mutex);
+	return (block_realloc);
 }

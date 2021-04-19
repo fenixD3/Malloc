@@ -2,7 +2,7 @@
 
 static size_t	len_num(size_t num, char base)
 {
-	if (num <= (size_t)base)
+	if (num < (size_t)base)
 		return (1);
 	return (len_num(num / base, base) + 1);
 }

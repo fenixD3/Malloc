@@ -23,6 +23,7 @@ typedef enum	e_event
 	HEAP,
 	DEALLOCATE_HEAP,
 	BLOCK,
+	BLOCK_DATA,
 	STATIC,
 	PTR
 }				t_event;
@@ -37,8 +38,8 @@ void 	write_to_log(const char* str, t_event event, void* dynamic_data,
 
 t_bool	get_cached_env(t_environment searched_env);
 char	*start_event_to_str(t_start_event start_event);
-void log_heap_data(t_heap* heap, int fd, t_event event);
-void	log_block_data(t_block* block, int fd);
+void	log_heap_data(t_heap* heap, int fd, t_event event);
+void	log_block_data(t_block* block, int fd, t_event event);
 void	log_pointer(void *ptr, int fd);
 
 #endif

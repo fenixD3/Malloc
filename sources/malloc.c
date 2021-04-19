@@ -20,12 +20,12 @@ void	*get_allocated_block(
 		trg_heap = create_heap(&heap_head, prev_trg_heap, alloc_info);
 		write_to_log("Created heap: ", HEAP, trg_heap, 0);
 		alloc_block = append_new_block(trg_heap, prev_avail_block, alloc_info);
-//		write_to_log("Created block: ", BLOCK, prev_avail_block->next, 0);
+		write_to_log("Created data block: ", BLOCK, alloc_block, 0);
 	}
 	else
 	{
 		write_to_log("Found heap: ", HEAP, prev_trg_heap->next, 0);
-//		write_to_log("Found block: ", BLOCK, prev_avail_block->next, 0);
+		write_to_log("Found data block: ", BLOCK, alloc_block, 0);
 	}
 	return ((void *)alloc_block);
 }
@@ -45,7 +45,9 @@ void	*malloc(size_t size)
 {
 	void *allocated_memory;
 
+	pthread_mutex_lock(&g_mutex);
 	logger_init(MALLOC);
 	allocated_memory = process_malloc(size);
+	pthread_mutex_unlock(&g_mutex);
 	return (allocated_memory);
 }

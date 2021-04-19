@@ -31,6 +31,11 @@ char	*start_event_to_str(t_start_event start_event)
 
 void	log_heap_data(t_heap* heap, int fd, t_event event)
 {
+	if (!heap)
+	{
+		ft_putstr_fd("Heap is NULL!\n", fd);
+		return ;
+	}
 	ft_itoa_base((size_t)heap, 16, TRUE, fd);
 	ft_putchar_fd(' ', fd);
 	ft_putstr_fd(get_heap_group_name(heap->type), fd);
@@ -43,18 +48,26 @@ void	log_heap_data(t_heap* heap, int fd, t_event event)
 	}
 }
 
-void	log_block_data(t_block* block, int fd)
+void	log_block_data(t_block *block, int fd, t_event event)
 {
+	if (!block)
+	{
+		ft_putstr_fd("Block is NULL!\n", fd);
+		return ;
+	}
 	ft_itoa_base((size_t)block, 16, TRUE, fd);
-	if (block->is_freed)
-		ft_putstr_fd(" Block is free\n", fd);
-	else
-		ft_putstr_fd(" Block is not free\n", fd);
+	if (event == BLOCK)
+	{
+		if (block->is_freed)
+			ft_putstr_fd(" Block is free\n", fd);
+		else
+			ft_putstr_fd(" Block is not free\n", fd);
+	}
 }
 
 void	log_pointer(void *ptr, int fd)
 {
 	if (!ptr)
-		ft_putstr_fd("NULL\n", fd);
+		ft_putstr_fd("ptr is NULL\n", fd);
 	ft_itoa_base((size_t)ptr, 16, TRUE, fd);
 }

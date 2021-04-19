@@ -1,12 +1,18 @@
 SHELL = /bin/sh
 
-NAME_FILE = libft_malloc
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
 
-FLAGS = -Wall -Wextra -Werror
+NAME_LIB = libft_malloc_$(HOSTTYPE).so
+NAME_LINK = libft_malloc.so
+
+FLAGS = -Wall -Wextra -Werror -fPIC
+SHARED_FLAG = -shared
 
 SRCS = block_utils.c calloc.c extern_definition.c free.c free_utils.c heap_utils.c malloc.c malloc_utils.c print_utils.c \
 	realloc.c realloc_utils.c show_mem.c logger.c logger_utils.c ft_bzero.c ft_itoa_base.c ft_memcpy.c \
-	ft_memset.c ft_putchar.c ft_putchar_fd.c ft_putstr.c ft_putstr_fd.c ft_strlen.c ft_strncpy.c main.c
+	ft_memset.c ft_putchar.c ft_putchar_fd.c ft_putstr.c ft_putstr_fd.c ft_strlen.c ft_strncpy.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -18,10 +24,12 @@ HEADERS = $(addprefix $(HEADER_PATH),$(HEADER_FILES))
 vpath %.c ./sources ./sources/logger ./sources/libc
 vpath %.h ./includes
 
-all: $(NAME_FILE)
+all: $(NAME_LIB)
 
-$(NAME_FILE): $(OBJS)
-	@gcc -o $(NAME_FILE) $(OBJS)
+$(NAME_LIB): $(OBJS)
+	@gcc $(SHARED_FLAG) -o $(NAME_LIB) $(OBJS)
+	@rm -f $(NAME_LINK)
+	@ln -s $(NAME_LIB) $(NAME_LINK)
 
 $(OBJS): %.o:%.c $(HEADERS)
 	@gcc -c $< -I$(HEADER_PATH) $(FLAGS) -o $@
@@ -31,6 +39,6 @@ clean:
 	@rm -f $(OBJS)
 
 fclean: clean
-	@rm -f $(NAME_FILE)
+	@rm -f $(NAME_LIB) $(NAME_LINK)
 
 re: fclean all

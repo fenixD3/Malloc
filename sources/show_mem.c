@@ -2,12 +2,16 @@
 
 void	show_alloc_mem()
 {
+	pthread_mutex_lock(&g_mutex);
 	process_show_mem(FALSE, 1);
+	pthread_mutex_unlock(&g_mutex);
 }
 
 void	show_mem_with_blocks()
 {
+	pthread_mutex_lock(&g_mutex);
 	process_show_mem(TRUE, 1);
+	pthread_mutex_unlock(&g_mutex);
 }
 
 void	process_show_mem(t_bool show_block_mem, int fd)
