@@ -17,31 +17,15 @@ static void	init_heap(
 	heap->next = NULL;
 }
 
-t_heap* find_available_heap(t_heap* heap_head, t_heap** prev_target_heap,
-							const t_alloc_info* alloc_info)
-{
-	t_heap *current_heap;
-
-	current_heap = heap_head;
-	*prev_target_heap = NULL;
-	while (current_heap)
-	{
-		if (current_heap->type == alloc_info->alloc_type
-			&& current_heap->avail_size >= alloc_info->alloc_size)
-			return (current_heap);
-		*prev_target_heap = current_heap;
-		current_heap = current_heap->next;
-	}
-	return (NULL);
-}
-
-t_heap* create_heap(t_heap** heap_head, t_heap* prev_target_heap,
+t_heap		*create_heap(t_heap** heap_head, t_heap* prev_target_heap,
 					const t_alloc_info* alloc_info)
 {
 	t_heap *res;
 	size_t heap_alloc_size;
 
 	heap_alloc_size = get_heap_size(alloc_info->alloc_type) + sizeof(t_heap);
+	if (alloc_info->alloc_type == LARGE)
+		heap_alloc_size = alloc_info->block_size + sizeof(t_heap);
 	if (heap_alloc_size > get_system_memory_limit())
 		return (NULL);
 	res = mmap(NULL, heap_alloc_size, PROT_READ | PROT_WRITE,
@@ -50,7 +34,7 @@ t_heap* create_heap(t_heap** heap_head, t_heap* prev_target_heap,
 		return (NULL);
 	if (!prev_target_heap)
 	{
-		*heap_head = res; /// TODO проверить на правильность!
+		*heap_head = res;
 		g_allocated_heap = *heap_head;
 	}
 	init_heap(res, heap_alloc_size, alloc_info->alloc_type, prev_target_heap);

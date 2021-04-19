@@ -25,7 +25,7 @@ size_t			get_heap_size(t_page_types page_type)
 		return (TINY_PAGE_SIZE);
 	if (page_type == SMALL)
 		return (SMALL_PAGE_SIZE);
-	return (LARGE);
+	return (0);
 }
 
 size_t			get_system_memory_limit()

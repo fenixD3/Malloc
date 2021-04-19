@@ -5,10 +5,11 @@
 # include <sys/time.h>
 # include <sys/resource.h>
 # include <pthread.h>
+# include <stdint.h>
 
 # include "malloc_struct.h"
-# include "libft.h"
 # include "logger.h"
+# include "libc.h"
 
 void			free(void *ptr);
 void			*malloc(size_t size);

@@ -3,8 +3,17 @@
 
 # include "malloc_struct.h"
 
-void * find_avail_block(t_heap* target_heap, t_block** prev_avail_block,
-						const t_alloc_info* alloc_info);
+void * find_avail_block_and_heap(
+	t_heap* head_head,
+	t_heap** prev_target_heap,
+	t_block** prev_avail_block,
+	const t_alloc_info* alloc_info);
+
+void	*find_avail_block(
+		t_heap *target_heap,
+		t_block **prev_avail_block,
+		const t_alloc_info* alloc_info);
+
 void * append_new_block(
 		t_heap *target_heap,
 		t_block* last_block,

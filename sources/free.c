@@ -3,6 +3,7 @@
 
 void	deallocate_heap(t_heap *target_heap)
 {
+	write_to_log("Deallocate heap: ", DEALLOCATE_HEAP, target_heap, 0);
 	if (target_heap->prev)
 		target_heap->prev->next = target_heap->next;
 	if (target_heap->next)
@@ -18,18 +19,22 @@ void	process_free(void *ptr)
 	t_block	*target_block;
 
 	search_target_block(&target_heap, &target_block, g_allocated_heap, ptr);
+	write_to_log("Found heap: ", HEAP, target_heap, 0);
+	write_to_log("Found block: ", BLOCK, BLOCK_TO_DATA(target_block), 0);
 	if (!target_heap || !target_block || target_block->is_freed)
 		return ;
 	target_block->is_freed = TRUE;
 	target_heap->avail_size += target_block->data_size;
+	write_to_log("Found heap: ", HEAP, target_heap, 0);
+	process_defragmentation(target_block, target_heap);
 	if (--target_heap->block_count == 0)
 		return (deallocate_heap(target_heap));
-	process_defragmentation(target_block);
 }
 
 void	free(void *ptr)
 {
 	logger_init(FREE);
+	write_to_log("Freeing ptr: ", PTR, ptr, 0);
 	if (!ptr)
 		return ;
 	process_free(ptr);

@@ -15,14 +15,14 @@ add_executable(Malloc
     sources/block_utils.c
     includes/block_utils.h
     sources/extern_definition.c includes/heap_utils.h sources/heap_utils.c sources/libc/ft_itoa_base.c includes/print_utils.h
-    sources/libft/libft.h sources/print_utils.c sources/show_mem.c
-    sources/libft/ft_putstr.c
-    sources/libft/ft_strlen.c
-    sources/libft/ft_putchar.c
-    sources/libft/ft_putchar_fd.c
-    sources/libft/ft_putstr_fd.c
-    sources/libft/ft_bzero.c
-    sources/libft/ft_strncpy.c
-    sources/libft/ft_memset.c
-    sources/libft/ft_memcpy.c
-    includes/logger.h sources/logger/logger.c sources/logger/logger_utils.c sources/free.c sources/free_utils.c includes/free_utils.h sources/realloc.c includes/realloc_utils.h sources/realloc_utils.c sources/calloc.c)
+    sources/print_utils.c sources/show_mem.c
+    sources/libc/ft_bzero.c
+    sources/libc/ft_memcpy.c
+    sources/libc/ft_memset.c
+    sources/libc/ft_putchar.c
+    sources/libc/ft_putchar_fd.c
+    sources/libc/ft_putstr.c
+    sources/libc/ft_putstr_fd.c
+    sources/libc/ft_strlen.c
+    sources/libc/ft_strncpy.c
+    includes/logger.h sources/logger/logger.c sources/logger/logger_utils.c sources/free.c sources/free_utils.c includes/free_utils.h sources/realloc.c includes/realloc_utils.h sources/realloc_utils.c sources/calloc.c includes/libc.h)

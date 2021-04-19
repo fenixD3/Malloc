@@ -22,7 +22,8 @@ typedef enum	e_page_types
 {
 	TINY,
 	SMALL,
-	LARGE
+	LARGE,
+	NONE
 }				t_page_types;
 
 typedef struct	s_heap

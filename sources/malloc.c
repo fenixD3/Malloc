@@ -7,18 +7,26 @@ void	*get_allocated_block(
 	t_heap *heap_head,
 	const t_alloc_info* alloc_info)
 {
-	t_heap		*target_heap;
-	t_heap		*prev_target_heap;
+	t_heap		*trg_heap;
+	t_heap		*prev_trg_heap;
 	void		*alloc_block;
 	t_block		*prev_avail_block;
 
 	prev_avail_block = NULL;
-	target_heap = find_available_heap(heap_head, &prev_target_heap, alloc_info);
-	if (!target_heap)
-		target_heap = create_heap(&heap_head, prev_target_heap, alloc_info);
-	alloc_block = find_avail_block(target_heap, &prev_avail_block, alloc_info);
+	alloc_block = find_avail_block_and_heap(heap_head, &prev_trg_heap,
+											&prev_avail_block, alloc_info);
 	if (!alloc_block)
-		alloc_block = append_new_block(target_heap, prev_avail_block, alloc_info);
+	{
+		trg_heap = create_heap(&heap_head, prev_trg_heap, alloc_info);
+		write_to_log("Created heap: ", HEAP, trg_heap, 0);
+		alloc_block = append_new_block(trg_heap, prev_avail_block, alloc_info);
+//		write_to_log("Created block: ", BLOCK, prev_avail_block->next, 0);
+	}
+	else
+	{
+		write_to_log("Found heap: ", HEAP, prev_trg_heap->next, 0);
+//		write_to_log("Found block: ", BLOCK, prev_avail_block->next, 0);
+	}
 	return ((void *)alloc_block);
 }
 
@@ -29,10 +37,11 @@ void	*process_malloc(size_t size)
 	if (!size)
 		return (NULL);
 	alloc_info = get_alloc_info((size + 15) & ~15);
+	write_to_log("Aligned size = ", STATIC, NULL, size);
 	return (get_allocated_block(g_allocated_heap, &alloc_info));
 }
 
-void		*malloc(size_t size)
+void	*malloc(size_t size)
 {
 	void *allocated_memory;
 

@@ -5,6 +5,7 @@
 
 void	*extend_block(t_block* target_block, t_heap* target_heap, size_t new_size)
 {
+	write_to_log("Extend block: ", BLOCK, target_block, 0);
 	if (new_size < target_block->data_size)
 		target_heap->avail_size += target_block->data_size - new_size;
 	else
@@ -19,6 +20,7 @@ void	*realloc_block(t_heap *target_heap, t_block *target_block, size_t new_size)
 	t_alloc_info	alloc_info;
 
 	new_size = (new_size + 15) & ~15;
+	write_to_log("Aligned size = ", STATIC, NULL, new_size);
 	if (can_extend_block(target_block, target_heap, new_size))
 		return (extend_block(target_block, target_heap, new_size));
 	alloc_info = get_alloc_info(new_size);
@@ -34,13 +36,19 @@ void	*process_realloc(void *ptr, size_t size)
 	t_block	*target_block;
 
 	if (!ptr)
+	{
+		write_to_log("Ptr is NULL, start malloc", STR, NULL, 0);
 		return (process_malloc(size));
+	}
 	if (size == 0)
 	{
+		write_to_log("Ptr is 0, start free", STR, NULL, 0);
 		process_free(ptr);
 		return (NULL);
 	}
 	search_target_block(&target_heap, &target_block, g_allocated_heap, ptr);
+	write_to_log("Found heap: ", HEAP, target_heap, 0);
+	write_to_log("Found block: ", BLOCK, target_block, 0);
 	if (!target_block || target_block->is_freed)
 		return (NULL);
 	return (realloc_block(target_heap, target_block, size));
@@ -49,5 +57,7 @@ void	*process_realloc(void *ptr, size_t size)
 void	*realloc(void *ptr, size_t size)
 {
 	logger_init(REALLOC);
+	write_to_log("Realloc ptr = ", PTR, ptr, 0);
+	write_to_log("New size = ", STATIC, NULL, size);
 	return (process_realloc(ptr, size));
 }
