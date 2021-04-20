@@ -82,15 +82,22 @@ int main()
 //	test3();
 //	test4();
 //	test5();
-	char *res = malloc(16);
-//	show_mem_with_blocks();
-	res[0] = (uint8_t)6;
-	res[1] = (uint8_t)127;
-	res[2] = (uint8_t)6;
-	res[3] = (uint8_t)6;
-	res[4] = (uint8_t)5;
-	res[5] = (uint8_t)5;
-	res[6] = (uint8_t)5;
+//	char *res = malloc(16);
+////	show_mem_with_blocks();
+//	res[0] = (uint8_t)6;
+//	res[1] = (uint8_t)127;
+//	res[2] = (uint8_t)6;
+//	res[3] = (uint8_t)6;
+//	res[4] = (uint8_t)5;
+//	res[5] = (uint8_t)5;
+//	res[6] = (uint8_t)5;
+	int i = 1;
+	while (i++ <= 344)
+	{
+		if (i == 340)
+			print("Stop");
+		void *res = malloc(16);
+	}
 	show_mem_with_blocks();
 //	free(res);
 //	show_mem_with_blocks();

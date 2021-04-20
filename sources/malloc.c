@@ -5,26 +5,30 @@
 
 void	*get_allocated_block(
 	t_heap *heap_head,
-	const t_alloc_info* alloc_info)
+	const t_alloc_info* info)
 {
 	t_heap		*trg_heap;
-	t_heap		*prev_trg_heap;
+	t_heap		*prv_trg_heap;
 	void		*alloc_block;
-	t_block		*prev_avail_block;
+	t_block		*prv_block;
 
-	prev_avail_block = NULL;
-	alloc_block = find_avail_block_and_heap(heap_head, &prev_trg_heap,
-											&prev_avail_block, alloc_info);
+	alloc_block = get_block_heap(&trg_heap, &prv_trg_heap, &prv_block, info);
+	if (!trg_heap && prv_trg_heap && !prv_trg_heap->next)
+		trg_heap = prv_trg_heap;
+	if (!prv_block || (trg_heap && trg_heap->avail_size < info->alloc_size))
+	{
+		trg_heap = create_heap(&heap_head, prv_trg_heap, info);
+		prv_block = NULL;
+		write_to_log("Created heap: ", HEAP, trg_heap, 0);
+	}
 	if (!alloc_block)
 	{
-		trg_heap = create_heap(&heap_head, prev_trg_heap, alloc_info);
-		write_to_log("Created heap: ", HEAP, trg_heap, 0);
-		alloc_block = append_new_block(trg_heap, prev_avail_block, alloc_info);
+		alloc_block = append_new_block(trg_heap, prv_block, info);
 		write_to_log("Created data block: ", BLOCK, alloc_block, 0);
 	}
 	else
 	{
-		write_to_log("Found heap: ", HEAP, prev_trg_heap->next, 0);
+		write_to_log("Found heap: ", HEAP, prv_trg_heap->next, 0);
 		write_to_log("Found data block: ", BLOCK, alloc_block, 0);
 	}
 	return ((void *)alloc_block);

@@ -1,4 +1,5 @@
 #include "block_utils.h"
+#include "malloc.h"
 
 static void	init_block(
 	t_block *block,
@@ -21,7 +22,6 @@ void	*find_avail_block(
 	t_block	*blocks_meta;
 
 	blocks_meta = (t_block *)HEAP_TO_BLOCK(target_heap);
-	*prev_avail_block = blocks_meta->prev;
 	if (!target_heap->block_count)
 		return (NULL);
 	while (blocks_meta)
@@ -38,25 +38,33 @@ void	*find_avail_block(
 	return (NULL);
 }
 
-void	*find_avail_block_and_heap(
-	t_heap *head_head,
+void	*get_block_heap(
+	t_heap **target_heap,
 	t_heap **prev_target_heap,
 	t_block **prev_avail_block,
 	const t_alloc_info *alloc_info)
 {
 	void	*avail_block;
+	t_heap	*curr_heap;
 
+	*target_heap = NULL;
 	*prev_target_heap = NULL;
-	while (head_head)
+	*prev_avail_block = NULL;
+	curr_heap = g_allocated_heap;
+	while (curr_heap)
 	{
-		if (head_head->type == alloc_info->alloc_type)
+		if (curr_heap->type == alloc_info->alloc_type)
 		{
-			avail_block = find_avail_block(head_head, prev_avail_block, alloc_info);
+			avail_block = find_avail_block(curr_heap, prev_avail_block,
+										   alloc_info);
 			if (avail_block)
+			{
+				*target_heap = curr_heap;
 				return (avail_block);
+			}
 		}
-		*prev_target_heap = head_head;
-		head_head = head_head->next;
+		*prev_target_heap = curr_heap;
+		curr_heap = curr_heap->next;
 	}
 	return (NULL);
 }
