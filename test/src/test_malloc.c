@@ -84,14 +84,14 @@ static void test_malloc_free_size()
 
 void run_test_malloc(void)
 {
-    // test_malloc_null();
+	test_malloc_null();
     test_malloc_one();
-    // test_malloc_getpagesize();
-    // test_malloc_limits();
-    // test_malloc_free_size();
-
-    // show_alloc_mem();
-    // show_heap_list();
+//     test_malloc_getpagesize();
+//     test_malloc_limits();
+//     test_malloc_free_size();
+//
+//     show_alloc_mem();
+//     show_heap_list();
 }
 
 

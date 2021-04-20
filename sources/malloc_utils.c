@@ -19,13 +19,13 @@ t_page_types	get_block_group(size_t allocated_size)
 	return (LARGE);
 }
 
-size_t			get_heap_size(t_page_types page_type)
+size_t			get_heap_size(t_page_types page_type, size_t size)
 {
 	if (page_type == TINY)
 		return (TINY_PAGE_SIZE);
 	if (page_type == SMALL)
 		return (SMALL_PAGE_SIZE);
-	return (0);
+	return (size + sizeof(t_block));
 }
 
 int				get_system_memory_limit(struct rlimit *rlim)

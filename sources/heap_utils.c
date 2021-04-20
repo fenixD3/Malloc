@@ -24,9 +24,8 @@ t_heap		*create_heap(t_heap** heap_head, t_heap* prev_target_heap,
 	size_t			heap_alloc_size;
 	struct rlimit	rlim;
 
-	heap_alloc_size = get_heap_size(alloc_info->alloc_type) + sizeof(t_heap);
-	if (alloc_info->alloc_type == LARGE)
-		heap_alloc_size = alloc_info->block_size + sizeof(t_heap);
+	heap_alloc_size = get_heap_size(alloc_info->alloc_type,
+		alloc_info->block_size) + sizeof(t_heap);
 	if (get_system_memory_limit(&rlim) == -1 && heap_alloc_size > rlim.rlim_max)
 		return (NULL);
 	res = mmap(NULL, heap_alloc_size, PROT_READ | PROT_WRITE,

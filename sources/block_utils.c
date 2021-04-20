@@ -30,6 +30,7 @@ void	*find_avail_block(
 			&& blocks_meta->data_size >= alloc_info->block_size)
 		{
 			target_heap->avail_size -= alloc_info->block_size;
+			blocks_meta->is_freed = FALSE;
 			return (BLOCK_TO_DATA(blocks_meta));
 		}
 		*prev_avail_block = blocks_meta;

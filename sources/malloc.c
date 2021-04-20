@@ -28,7 +28,7 @@ void	*get_allocated_block(
 	}
 	else
 	{
-		write_to_log("Found heap: ", HEAP, prv_trg_heap->next, 0);
+		write_to_log("Found heap: ", HEAP, trg_heap, 0);
 		write_to_log("Found data block: ", BLOCK, alloc_block, 0);
 	}
 	return ((void *)alloc_block);
