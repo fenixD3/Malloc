@@ -20,13 +20,14 @@ static void	init_heap(
 t_heap		*create_heap(t_heap** heap_head, t_heap* prev_target_heap,
 					const t_alloc_info* alloc_info)
 {
-	t_heap *res;
-	size_t heap_alloc_size;
+	t_heap			*res;
+	size_t			heap_alloc_size;
+	struct rlimit	rlim;
 
 	heap_alloc_size = get_heap_size(alloc_info->alloc_type) + sizeof(t_heap);
 	if (alloc_info->alloc_type == LARGE)
 		heap_alloc_size = alloc_info->block_size + sizeof(t_heap);
-	if (heap_alloc_size > get_system_memory_limit())
+	if (get_system_memory_limit(&rlim) == -1 && heap_alloc_size > rlim.rlim_max)
 		return (NULL);
 	res = mmap(NULL, heap_alloc_size, PROT_READ | PROT_WRITE,
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);

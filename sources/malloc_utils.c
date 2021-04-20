@@ -28,11 +28,9 @@ size_t			get_heap_size(t_page_types page_type)
 	return (0);
 }
 
-size_t			get_system_memory_limit()
+int				get_system_memory_limit(struct rlimit *rlim)
 {
-	struct rlimit rlim;
-
-	if ((getrlimit(RLIMIT_DATA, &rlim)) == -1)
-		return (-1); /// TODO исправить этот код возврата
-	return (rlim.rlim_max);
+	if ((getrlimit(RLIMIT_DATA, rlim)) == -1)
+		return (-1);
+	return (0);
 }

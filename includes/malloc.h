@@ -17,6 +17,7 @@ void					*realloc(void *ptr, size_t size);
 void					*calloc(size_t num, size_t size);
 
 void					show_alloc_mem();
+void					show_mem_with_blocks();
 
 extern t_heap			*g_allocated_heap;
 extern pthread_mutex_t	g_mutex;

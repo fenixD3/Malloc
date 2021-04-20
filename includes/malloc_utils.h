@@ -12,6 +12,6 @@ void			*get_allocated_block(
 t_alloc_info	get_alloc_info(size_t block_size);
 t_page_types	get_block_group(size_t allocated_size);
 size_t			get_heap_size(t_page_types page_type);
-size_t			get_system_memory_limit();
+int get_system_memory_limit(struct rlimit *rlim);
 
 #endif

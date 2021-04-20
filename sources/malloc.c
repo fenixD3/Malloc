@@ -37,12 +37,16 @@ void	*get_allocated_block(
 void	*process_malloc(size_t size)
 {
 	t_alloc_info	alloc_info;
+	void			*alloc_memory;
 
 	if (!size)
 		return (NULL);
 	alloc_info = get_alloc_info((size + 15) & ~15);
 	write_to_log("Aligned size = ", STATIC, NULL, size);
-	return (get_allocated_block(g_allocated_heap, &alloc_info));
+	alloc_memory = get_allocated_block(g_allocated_heap, &alloc_info);
+	if (get_cached_env(ENV_SCRIBBLE))
+		ft_memset(alloc_memory, 0xAA, alloc_info.block_size);
+	return (alloc_memory);
 }
 
 void	*malloc(size_t size)

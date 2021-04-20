@@ -10,7 +10,8 @@ void	deallocate_heap(t_heap *target_heap)
 		target_heap->next->prev = target_heap->prev;
 	if (target_heap == g_allocated_heap)
 		g_allocated_heap = target_heap->next;
-	munmap(target_heap, target_heap->total_size);
+	if (munmap(target_heap, target_heap->total_size) == -1)
+		return ;
 }
 
 void	process_free(void *ptr)
@@ -28,6 +29,8 @@ void	process_free(void *ptr)
 		return ;
 	target_block->is_freed = TRUE;
 	target_heap->avail_size += target_block->data_size;
+	if (get_cached_env(ENV_SCRIBBLE))
+		ft_memset(ptr, 0x55, target_block->data_size);
 	write_to_log("Found heap: ", HEAP, target_heap, 0);
 	process_defragmentation(target_block, target_heap);
 	if (--target_heap->block_count == 0)
