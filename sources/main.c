@@ -244,7 +244,7 @@ int main()
 //	test2();
 //	test3();
 //	test4();
-//	test5();
+	test5();
 //	char *res = malloc(16);
 ////	show_mem_with_blocks();
 //	res[0] = (uint8_t)6;

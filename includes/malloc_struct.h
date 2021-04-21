@@ -1,5 +1,5 @@
-#ifndef MALLOC_MALLOC_STRUCT
-# define MALLOC_MALLOC_STRUCT
+#ifndef MALLOC_STRUCT_H
+# define MALLOC_STRUCT_H
 
 # include <unistd.h>
 # include <string.h>

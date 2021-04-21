@@ -24,15 +24,17 @@ void			ft_itoa_base(size_t num, char base, t_bool hex_prefix, int fd)
 	unsigned char	to_out[128];
 	unsigned char	mod;
 	ssize_t			num_length;
-	ssize_t			additional_length;
+	ssize_t			extra_length;
 
+	extra_length = 0;
 	ft_bzero((void *)to_out, 128);
 	num_length = (ssize_t)len_num(num, base);
-	additional_length = (ssize_t)get_additional_length(num_length, hex_prefix);
-	num_length += additional_length;
+	if (base != 10)
+		extra_length = (ssize_t)get_additional_length(num_length, hex_prefix);
+	num_length += extra_length;
 	if (hex_prefix)
 		ft_strncpy((char *)to_out, "0x", 2);
-	while (num_length-- && num_length != additional_length - 1)
+	while (num_length-- && num_length != extra_length - 1)
 	{
 		mod = num % base;
 		if (mod > 9)

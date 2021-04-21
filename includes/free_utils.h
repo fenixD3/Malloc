@@ -12,6 +12,6 @@ void	search_target_block(
 	void *searched_ptr);
 
 void	deallocate_heap(t_heap *target_heap);
-t_block* process_defragmentation(t_block* target_block, t_heap* target_heap);
+t_block	*process_defragmentation(t_block *target_block, t_heap *target_heap);
 
 #endif
