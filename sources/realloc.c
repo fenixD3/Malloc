@@ -3,7 +3,10 @@
 #include "free_utils.h"
 #include "realloc_utils.h"
 
-void	*extend_block(t_block* target_block, t_heap* target_heap, size_t new_size)
+void	*extend_block(
+	t_block *target_block,
+	t_heap *target_heap,
+	size_t new_size)
 {
 	write_to_log("Extend block: ", BLOCK, target_block, 0);
 	if (new_size < target_block->data_size)
@@ -11,22 +14,25 @@ void	*extend_block(t_block* target_block, t_heap* target_heap, size_t new_size)
 	else
 		target_heap->avail_size -= new_size - target_block->data_size;
 	target_block->data_size = new_size;
-	return (BLOCK_TO_DATA(target_block));
+	return (block_data_shift(target_block));
 }
 
-void	*realloc_block(t_heap *target_heap, t_block *target_block, size_t new_size)
+void	*realloc_block(
+	t_heap *target_heap,
+	t_block *trg_block,
+	size_t new_size)
 {
 	void			*new_block;
 	t_alloc_info	alloc_info;
 
 	new_size = (new_size + 15) & ~15;
 	write_to_log("Aligned size = ", STATIC, NULL, new_size);
-	if (can_extend_block(target_block, target_heap, new_size))
-		return (extend_block(target_block, target_heap, new_size));
+	if (can_extend_block(trg_block, target_heap, new_size))
+		return (extend_block(trg_block, target_heap, new_size));
 	alloc_info = get_alloc_info(new_size);
 	new_block = get_allocated_block(target_heap, &alloc_info);
-	ft_memcpy(new_block, BLOCK_TO_DATA(target_block), target_block->data_size);
-	process_free(target_block);
+	ft_memcpy(new_block, block_data_shift(trg_block), trg_block->data_size);
+	process_free(trg_block);
 	return (new_block);
 }
 
@@ -56,7 +62,7 @@ void	*process_realloc(void *ptr, size_t size)
 
 void	*realloc(void *ptr, size_t size)
 {
-	void *block_realloc;
+	void	*block_realloc;
 
 	pthread_mutex_lock(&g_mutex);
 	logger_init(REALLOC);

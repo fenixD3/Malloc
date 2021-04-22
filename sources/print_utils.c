@@ -9,7 +9,7 @@ char	*get_heap_group_name(t_page_types type)
 	return ("LARGE");
 }
 
-void	print_heap_header(t_heap* heap, const char* heap_group, int fd)
+void	print_heap_header(t_heap *heap, const char *heap_group, int fd)
 {
 	ft_putstr_fd(heap_group, fd);
 	ft_putstr_fd(" : ", fd);
@@ -17,12 +17,12 @@ void	print_heap_header(t_heap* heap, const char* heap_group, int fd)
 	ft_putchar_fd('\n', fd);
 }
 
-size_t print_block_meta(t_block* block_meta, t_bool show_block_mem, int fd)
+size_t	print_block_meta(t_block *block_meta, t_bool show_block_mem, int fd)
 {
 	void	*start_addr;
 	void	*end_addr;
 
-	start_addr = BLOCK_TO_DATA(block_meta);
+	start_addr = block_data_shift(block_meta);
 	end_addr = start_addr + block_meta->data_size;
 	ft_itoa_base((size_t)start_addr, 16, TRUE, fd);
 	ft_putstr_fd(" - ", fd);
@@ -41,12 +41,12 @@ size_t print_block_meta(t_block* block_meta, t_bool show_block_mem, int fd)
 }
 
 void	print_block_mem(
-	unsigned char* start_addr,
-	unsigned char* end_addr,
+	unsigned char *start_addr,
+	unsigned char *end_addr,
 	size_t mem_size,
 	int fd)
 {
-	size_t i;
+	size_t	i;
 
 	ft_putstr_fd("\e[93mStart print block memory\e[39m\n", fd);
 	while (start_addr < end_addr)

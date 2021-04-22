@@ -113,11 +113,11 @@ static void test_malloc_getpagesize()
 static void test_malloc_limits()
 {
 	void	*t	= malloc(1);
-	void	*t0	= malloc(TINY_BLOCK_SIZE);
-	void	*t00	= malloc(TINY_BLOCK_SIZE);
-	void	*t000	= malloc(TINY_BLOCK_SIZE);
-	void	*t1	= malloc(SMALL_BLOCK_SIZE);
-	void	*t2	= malloc(SMALL_BLOCK_SIZE + 1);
+	void	*t0	= malloc(get_tiny_block_size());
+	void	*t00	= malloc(get_tiny_block_size());
+	void	*t000	= malloc(get_tiny_block_size());
+	void	*t1	= malloc(get_small_block_size());
+	void	*t2	= malloc(get_small_block_size() + 1);
 
 	// Should print mallocs in all categories (TINY, SMALL, LARGE)
 	 show_alloc_mem();
@@ -125,7 +125,7 @@ static void test_malloc_limits()
 	// show_heap_list();
 	free(t0);
 
-	t0 = malloc(TINY_BLOCK_SIZE - sizeof(t_block));
+	t0 = malloc(get_tiny_block_size() - sizeof(t_block));
 	 show_alloc_mem();
 	free(t0);
 	free(t00);
@@ -136,7 +136,7 @@ static void test_malloc_limits()
 
 static void test_malloc_free_size()
 {
-	void *t = malloc(SMALL_BLOCK_SIZE + 1);
+	void *t = malloc(get_small_block_size() + 1);
 
 	// heap should have 0 free_space
 	// show_heap_list();
@@ -167,9 +167,9 @@ static void realloc_1() {
 	t = realloc(t, 10);
 	t[0] = 'A';
 	t[9] = 'A';
-	t = realloc(t, TINY_BLOCK_SIZE);
-	t = realloc(t, SMALL_BLOCK_SIZE);
-	t = realloc(t, SMALL_BLOCK_SIZE + 2);
+	t = realloc(t, get_tiny_block_size());
+	t = realloc(t, get_small_block_size());
+	t = realloc(t, get_small_block_size() + 2);
 	t = realloc(t, 10);
 
 	if (t[0] != 'A' || t[9] != 'A')

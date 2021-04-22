@@ -1,13 +1,13 @@
 #include "print_utils.h"
 
-void	show_alloc_mem()
+void	show_alloc_mem(void)
 {
 	pthread_mutex_lock(&g_mutex);
 	process_show_mem(FALSE, 1);
 	pthread_mutex_unlock(&g_mutex);
 }
 
-void	show_mem_with_blocks()
+void	show_mem_with_blocks(void)
 {
 	pthread_mutex_lock(&g_mutex);
 	process_show_mem(TRUE, 1);
@@ -29,11 +29,11 @@ void	process_show_mem(t_bool show_block_mem, int fd)
 		if (heap->block_count)
 		{
 			if (!show_block_mem)
-				total_data_size +=
-				show_blocks_info((t_block*)HEAP_TO_BLOCK(heap), FALSE, fd);
+				total_data_size += show_blocks_info(
+						(t_block*)heap_block_shift(heap), FALSE, fd);
 			else
-				total_data_size +=
-				show_blocks_info((t_block*)HEAP_TO_BLOCK(heap), TRUE, fd);
+				total_data_size += show_blocks_info(
+						(t_block*)heap_block_shift(heap), TRUE, fd);
 		}
 		heap = heap->next;
 	}

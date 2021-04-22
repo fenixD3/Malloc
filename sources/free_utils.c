@@ -7,16 +7,16 @@ void	search_target_block(
 	t_heap *heap_head,
 	void *searched_ptr)
 {
-	t_block *block_meta;
+	t_block	*block_meta;
 
 	while (heap_head)
 	{
 		if (heap_head->block_count != 0)
 		{
-			block_meta = (t_block *)HEAP_TO_BLOCK(heap_head);
+			block_meta = (t_block *)heap_block_shift(heap_head);
 			while (block_meta)
 			{
-				if (BLOCK_TO_DATA(block_meta) == searched_ptr)
+				if (block_data_shift(block_meta) == searched_ptr)
 				{
 					*target_heap = heap_head;
 					*target_block = block_meta;
@@ -31,7 +31,7 @@ void	search_target_block(
 	*target_block = NULL;
 }
 
-t_block* process_defragmentation(t_block* target_block, t_heap* target_heap)
+t_block	*process_defragmentation(t_block *target_block, t_heap *target_heap)
 {
 	t_block	*total_meta_block;
 	size_t	block_count_before;
@@ -55,6 +55,6 @@ t_block* process_defragmentation(t_block* target_block, t_heap* target_heap)
 	if (target_block->next)
 		target_block->next->prev = total_meta_block;
 	write_to_log("Defragmentation end, wrapped blocks: ", STATIC, NULL,
-			  block_count_before - target_heap->block_count);
+		block_count_before - target_heap->block_count);
 	return (total_meta_block);
 }

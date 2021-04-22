@@ -5,10 +5,16 @@
 
 void	*process_realloc(void *ptr, size_t size);
 t_bool	can_extend_block(
-	t_block *target_block, t_heap *target_heap, size_t new_size);
+			t_block *target_block,
+			t_heap *target_heap,
+			size_t new_size);
 void	*realloc_block(
-	t_heap *target_heap, t_block *target_block, size_t new_size);
+			t_heap *target_heap,
+			t_block *trg_block,
+			size_t new_size);
 void	*extend_block(
-	t_block *target_block, t_heap *target_heap, size_t new_size);
+			t_block *target_block,
+			t_heap *target_heap,
+			size_t new_size);
 
 #endif

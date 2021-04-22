@@ -11,8 +11,8 @@ FLAGS = -Wall -Wextra -Werror -fPIC
 SHARED_FLAG = -shared
 
 SRCS = block_utils.c calloc.c extern_definition.c free.c free_utils.c heap_utils.c malloc.c malloc_utils.c print_utils.c \
-	realloc.c realloc_utils.c show_mem.c logger.c logger_utils.c ft_bzero.c ft_itoa_base.c ft_memcpy.c \
-	ft_memset.c ft_putchar.c ft_putchar_fd.c ft_putstr.c ft_putstr_fd.c ft_strlen.c ft_strncpy.c
+	realloc.c realloc_utils.c show_mem.c page_size_utils.c shift_utils.c logger.c logger_utils.c ft_bzero.c \
+	ft_itoa_base.c ft_memcpy.c ft_memset.c ft_putchar.c ft_putchar_fd.c ft_putstr.c ft_putstr_fd.c ft_strlen.c ft_strncpy.c
 
 OBJS = $(SRCS:.c=.o)
 

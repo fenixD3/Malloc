@@ -24,7 +24,8 @@ void	process_free(void *ptr)
 		return ;
 	search_target_block(&target_heap, &target_block, g_allocated_heap, ptr);
 	write_to_log("Found heap: ", HEAP, target_heap, 0);
-	write_to_log("Found data block: ", BLOCK_DATA, BLOCK_TO_DATA(target_block), 0);
+	write_to_log("Found data block: ", BLOCK_DATA,
+		block_data_shift(target_block), 0);
 	if (!target_heap || !target_block || target_block->is_freed)
 		return ;
 	target_block->is_freed = TRUE;

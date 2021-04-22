@@ -5,7 +5,7 @@
 
 void	*get_allocated_block(
 	t_heap *heap_head,
-	const t_alloc_info* info)
+	const t_alloc_info *info)
 {
 	t_heap		*trg_heap;
 	t_heap		*prv_trg_heap;
@@ -51,7 +51,7 @@ void	*process_malloc(size_t size)
 
 void	*malloc(size_t size)
 {
-	void *allocated_memory;
+	void	*allocated_memory;
 
 	pthread_mutex_lock(&g_mutex);
 	logger_init(MALLOC);

@@ -16,9 +16,9 @@ static void	*process_calloc(size_t num, size_t size)
 	return (new_alloc);
 }
 
-void		*calloc(size_t num, size_t size)
+void	*calloc(size_t num, size_t size)
 {
-	void *block_alloc;
+	void	*block_alloc;
 
 	pthread_mutex_lock(&g_mutex);
 	logger_init(CALLOC);

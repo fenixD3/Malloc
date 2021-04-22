@@ -23,7 +23,11 @@ void	logger_init(t_start_event start_event)
 	}
 }
 
-void	write_to_log(const char* str, t_event event, void* dynamic_data, size_t static_data)
+void	write_to_log(
+	const char *str,
+	t_event event,
+	void *dynamic_data,
+	size_t static_data)
 {
 	int		fd;
 
@@ -31,12 +35,12 @@ void	write_to_log(const char* str, t_event event, void* dynamic_data, size_t sta
 	{
 		fd = open(LOG_PATH, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (fd == -1)
-			return;
+			return ;
 		ft_putstr_fd(str, fd);
 		if (event == STATIC)
 			ft_itoa_base(static_data, 10, FALSE, fd);
 		else if (event == HEAP || event == DEALLOCATE_HEAP)
-			log_heap_data((t_heap*)dynamic_data, fd, event);
+			log_heap_data((t_heap *)dynamic_data, fd, event);
 		else if (event == BLOCK || event == BLOCK_DATA)
 			log_block_data((t_block *) dynamic_data, fd, event);
 		else if (event == PTR)

@@ -7,9 +7,11 @@ static size_t	len_num(size_t num, char base)
 	return (len_num(num / base, base) + 1);
 }
 
-static size_t	get_additional_length(const size_t num_length, t_bool hex_prefix)
+static size_t	get_additional_length(
+					const size_t num_length,
+					t_bool hex_prefix)
 {
-	size_t additional_length;
+	size_t	additional_length;
 
 	additional_length = 0;
 	if (hex_prefix)
@@ -19,7 +21,7 @@ static size_t	get_additional_length(const size_t num_length, t_bool hex_prefix)
 	return (additional_length);
 }
 
-void			ft_itoa_base(size_t num, char base, t_bool hex_prefix, int fd)
+void	ft_itoa_base(size_t num, char base, t_bool hex_prefix, int fd)
 {
 	unsigned char	to_out[128];
 	unsigned char	mod;

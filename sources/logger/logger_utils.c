@@ -29,7 +29,7 @@ char	*start_event_to_str(t_start_event start_event)
 	return (NULL);
 }
 
-void	log_heap_data(t_heap* heap, int fd, t_event event)
+void	log_heap_data(t_heap *heap, int fd, t_event event)
 {
 	if (!heap)
 	{

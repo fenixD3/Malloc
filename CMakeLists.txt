@@ -25,4 +25,4 @@ add_executable(Malloc
     sources/libc/ft_putstr_fd.c
     sources/libc/ft_strlen.c
     sources/libc/ft_strncpy.c
-    includes/logger.h sources/logger/logger.c sources/logger/logger_utils.c sources/free.c sources/free_utils.c includes/free_utils.h sources/realloc.c includes/realloc_utils.h sources/realloc_utils.c sources/calloc.c includes/libc.h)
+    includes/logger.h sources/logger/logger.c sources/logger/logger_utils.c sources/free.c sources/free_utils.c includes/free_utils.h sources/realloc.c includes/realloc_utils.h sources/realloc_utils.c sources/calloc.c includes/libc.h sources/page_size_utils.c sources/shift_utils.c)
