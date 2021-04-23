@@ -6,7 +6,7 @@ include_directories(includes sources/libft)
 set(CMAKE_C_STANDARD 99)
 
 add_executable(Malloc
-    sources/main.c
+        main.c
     includes/malloc.h
     sources/malloc.c
     includes/malloc_struct.h

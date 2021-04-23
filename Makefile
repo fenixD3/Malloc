@@ -4,7 +4,7 @@ ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
-NAME_LIB = libft_malloc_$(HOSTTYPE).so
+NAME = libft_malloc_$(HOSTTYPE).so
 NAME_LINK = libft_malloc.so
 
 FLAGS = -Wall -Wextra -Werror -fPIC
@@ -24,12 +24,12 @@ HEADERS = $(addprefix $(HEADER_PATH),$(HEADER_FILES))
 vpath %.c ./sources ./sources/logger ./sources/libc
 vpath %.h ./includes
 
-all: $(NAME_LIB)
+all: $(NAME)
 
-$(NAME_LIB): $(OBJS)
-	@gcc $(SHARED_FLAG) -o $(NAME_LIB) $(OBJS)
+$(NAME): $(OBJS)
+	@gcc $(SHARED_FLAG) -o $(NAME) $(OBJS)
 	@rm -f $(NAME_LINK)
-	@ln -s $(NAME_LIB) $(NAME_LINK)
+	@ln -s $(NAME) $(NAME_LINK)
 
 $(OBJS): %.o:%.c $(HEADERS)
 	@gcc -c $< -I$(HEADER_PATH) $(FLAGS) -o $@
@@ -39,6 +39,6 @@ clean:
 	@rm -f $(OBJS)
 
 fclean: clean
-	@rm -f $(NAME_LIB) $(NAME_LINK)
+	@rm -f $(NAME) $(NAME_LINK)
 
 re: fclean all
