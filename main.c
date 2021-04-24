@@ -244,7 +244,7 @@ int main()
 //	test2();
 //	test3();
 //	test4();
-	test5();
+//	test5();
 //	char *res = malloc(16);
 ////	show_mem_with_blocks();
 //	res[0] = (uint8_t)6;
@@ -281,6 +281,6 @@ int main()
 //	test_free_1();
 //	test_realloc_mix();
 //	test_realloc_mix_2();
-//	test_show_alloc_mem_ex();
+	test_show_alloc_mem_ex();
 	return 0;
 }
